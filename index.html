@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentra UMKM Desa Cikadu — Hasil Bumi Sukabumi</title>
+<meta name="description" content="Sentra UMKM Desa Cikadu, Sukabumi. Menyediakan hasil pertanian, hasil perkebunan, pupuk organik, dan aneka olahan makanan langsung dari petani dan pengrajin desa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1ECDA;
+    --paper-card:#FBF8F0;
+    --paper-deep:#E7E0C8;
+    --ink:#241F16;
+    --ink-soft:#544B36;
+    --forest:#2C4A34;
+    --forest-dark:#1B3122;
+    --gold:#C89B3C;
+    --gold-light:#E3C374;
+    --soil:#6B4428;
+    --leaf:#7C9A5C;
+    --line:rgba(36,31,22,0.14);
+    --shadow:0 10px 30px -14px rgba(27,49,34,0.35);
+    --radius:18px;
+    --font-display:'Fraunces', serif;
+    --font-body:'Public Sans', system-ui, sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer;}
+  input,textarea{font-family:inherit;}
+
+  .wrap{
+    width:100%;
+    max-width:1180px;
+    margin-inline:auto;
+    padding-inline:24px;
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--soil);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--soil);
+    display:inline-block;
+  }
+
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    color:var(--forest-dark);
+    font-weight:600;
+    line-height:1.12;
+    letter-spacing:-0.01em;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:14px 26px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:15px;
+    border:1.5px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--forest);
+    color:var(--paper-card);
+    box-shadow:var(--shadow);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 34px -14px rgba(27,49,34,0.5); }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ background:var(--ink); color:var(--paper); transform:translateY(-2px); }
+  .btn-gold{
+    background:var(--gold);
+    color:var(--forest-dark);
+  }
+  .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 16px 34px -16px rgba(200,155,60,0.6); }
+
+  :focus-visible{ outline:2.5px solid var(--gold); outline-offset:3px; border-radius:4px; }
+
+  /* ---------- Stamp badge (signature element) ---------- */
+  .stamp{ display:block; }
+  .stamp text{
+    font-family:var(--font-mono);
+    font-size:6.6px;
+    letter-spacing:2.6px;
+    fill:currentColor;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Contour pattern ---------- */
+  .contour{ position:absolute; inset:0; z-index:0; opacity:.5; pointer-events:none; }
+
+  /* ---------- Nav ---------- */
+  .site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(241,236,218,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .site-nav.is-scrolled{ border-color:var(--line); box-shadow:0 8px 24px -20px rgba(0,0,0,.4); }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:14px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{ width:44px; height:44px; color:var(--forest); flex-shrink:0; }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.15; }
+  .brand-text strong{ font-family:var(--font-display); font-size:19px; color:var(--forest-dark); font-weight:700; }
+  .brand-text span{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--soil); }
+
+  .nav-links{ display:flex; align-items:center; gap:34px; }
+  .nav-links a{
+    font-weight:600; font-size:14.5px; color:var(--ink-soft);
+    position:relative; padding-block:4px;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:100%; bottom:0; height:2px;
+    background:var(--gold); transition:right .28s ease;
+  }
+  .nav-links a:hover{ color:var(--forest-dark); }
+  .nav-links a:hover::after{ right:0; }
+
+  .nav-cta{ display:flex; align-items:center; gap:14px; }
+  .nav-toggle{
+    display:none; background:none; border:1.5px solid var(--ink); border-radius:10px;
+    width:42px; height:42px; align-items:center; justify-content:center;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+    content:""; display:block; width:18px; height:2px; background:var(--ink); position:relative; transition:.3s;
+  }
+  .nav-toggle span::before{ position:absolute; top:-6px; }
+  .nav-toggle span::after{ position:absolute; top:6px; }
+
+  .mobile-panel{
+    display:none; position:fixed; inset:0; z-index:99; background:var(--forest-dark);
+    padding:110px 28px 40px; flex-direction:column; gap:26px;
+  }
+  .mobile-panel.open{ display:flex; }
+  .mobile-panel a{ color:var(--paper); font-family:var(--font-display); font-size:28px; font-weight:600; }
+  .mobile-panel .btn{ align-self:flex-start; margin-top:10px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:168px 0 96px;
+    overflow:hidden;
+    background:linear-gradient(180deg, var(--paper) 0%, var(--paper) 78%, var(--paper-deep) 100%);
+  }
+  .hero-grid{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  .hero h1{ font-size:clamp(38px, 5vw, 60px); margin-block:20px 22px; }
+  .hero h1 em{ font-style:italic; color:var(--forest); }
+  .hero p.lede{ font-size:17.5px; color:var(--ink-soft); max-width:46ch; margin-bottom:32px; }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:48px; }
+
+  .hero-stats{ display:flex; gap:0; border-top:1px solid var(--line); padding-top:24px; flex-wrap:wrap; }
+  .hero-stats div{ padding-right:32px; margin-right:32px; border-right:1px solid var(--line); }
+  .hero-stats div:last-child{ border-right:none; }
+  .hero-stats strong{ display:block; font-family:var(--font-display); font-size:28px; color:var(--forest-dark); }
+  .hero-stats span{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+
+  .hero-art{ position:relative; height:480px; }
+  .hero-art .contour-box{
+    position:absolute; inset:0; border-radius:28px; overflow:hidden;
+    background:linear-gradient(160deg, var(--forest) 0%, var(--forest-dark) 100%);
+    box-shadow:var(--shadow);
+  }
+  .hero-art .stamp-float{
+    position:absolute; top:-26px; right:-18px; width:132px; height:132px;
+    background:var(--paper-card); border-radius:50%; padding:12px;
+    box-shadow:0 14px 30px -12px rgba(0,0,0,.4);
+    color:var(--forest);
+    animation:spin-slow 26s linear infinite;
+  }
+  @keyframes spin-slow{ to{ transform:rotate(360deg); } }
+
+  .polaroid{
+    position:absolute; background:var(--paper-card); border-radius:14px; padding:10px 10px 16px;
+    box-shadow:0 16px 30px -14px rgba(0,0,0,.45);
+    width:150px;
+  }
+  .polaroid .swatch{ width:100%; height:96px; border-radius:8px; margin-bottom:10px; }
+  .polaroid span{ font-family:var(--font-mono); font-size:11px; color:var(--ink); }
+  .polaroid.p1{ bottom:34px; left:-24px; transform:rotate(-7deg); }
+  .polaroid.p2{ bottom:70px; right:-16px; transform:rotate(6deg); }
+
+  /* ---------- Section shell ---------- */
+  section{ position:relative; padding:104px 0; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(30px,3.4vw,42px); margin-top:16px; }
+  .section-head p{ color:var(--ink-soft); margin-top:14px; font-size:16px; }
+  .section-head.center{ margin-inline:auto; text-align:center; }
+
+  /* ---------- About ---------- */
+  .about{ background:var(--paper-card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .about-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center; }
+  .about-visual{ position:relative; aspect-ratio:4/5; border-radius:var(--radius); overflow:hidden; background:var(--forest); }
+  .about-copy p{ color:var(--ink-soft); margin-bottom:16px; }
+  .about-list{ margin-top:28px; display:grid; gap:16px; }
+  .about-list li{ display:flex; gap:14px; align-items:flex-start; font-size:15px; }
+  .about-list svg{ width:22px; height:22px; color:var(--forest); flex-shrink:0; margin-top:2px; }
+
+  /* ---------- Products ---------- */
+  .tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px; }
+  .tab-btn{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.05em; text-transform:uppercase;
+    padding:11px 20px; border-radius:100px; border:1.5px solid var(--line); background:var(--paper-card);
+    color:var(--ink-soft); transition:.25s;
+  }
+  .tab-btn:hover{ border-color:var(--forest); color:var(--forest-dark); }
+  .tab-btn.active{ background:var(--forest); border-color:var(--forest); color:var(--paper); }
+
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; animation:fade-up .5s ease; }
+  @keyframes fade-up{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+  .product-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:24px; }
+  .product-card{
+    background:var(--paper-card); border-radius:var(--radius); border:1px solid var(--line);
+    overflow:hidden; transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .product-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow); }
+  .product-thumb{
+    position:relative; height:168px; display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .product-thumb svg{ width:56px; height:56px; color:rgba(255,255,255,.92); position:relative; z-index:1; }
+  .product-badge{
+    position:absolute; top:12px; left:12px; z-index:2;
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--paper-card); color:var(--forest-dark); padding:5px 10px; border-radius:100px;
+  }
+  .product-body{ padding:18px 20px 22px; }
+  .product-body h4{ font-size:18px; margin-bottom:6px; }
+  .product-body p{ font-size:13.5px; color:var(--ink-soft); margin-bottom:14px; min-height:38px; }
+  .product-foot{ display:flex; align-items:center; justify-content:space-between; }
+  .price{ font-family:var(--font-mono); font-weight:700; color:var(--soil); font-size:14.5px; }
+  .mini-link{
+    font-size:13px; font-weight:700; color:var(--forest); display:inline-flex; align-items:center; gap:5px;
+  }
+  .mini-link svg{ width:14px; height:14px; }
+
+  /* ---------- Why us ---------- */
+  .why{ background:var(--forest-dark); color:var(--paper); }
+  .why .eyebrow{ color:var(--gold-light); }
+  .why .eyebrow::before{ background:var(--gold-light); }
+  .why h2{ color:var(--paper); }
+  .why-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(241,236,218,0.14); border-radius:var(--radius); overflow:hidden; margin-top:48px; }
+  .why-card{ background:var(--forest-dark); padding:32px 26px; }
+  .why-card svg{ width:30px; height:30px; color:var(--gold-light); margin-bottom:18px; }
+  .why-card h4{ color:var(--paper); font-size:17px; margin-bottom:8px; }
+  .why-card p{ font-size:13.5px; color:rgba(241,236,218,0.72); }
+
+  /* ---------- Process ---------- */
+  .process-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; counter-reset:step; }
+  .process-card{ position:relative; padding-top:16px; border-top:1.5px solid var(--line); }
+  .process-num{ font-family:var(--font-mono); font-size:13px; color:var(--gold); font-weight:700; }
+  .process-card h4{ font-size:20px; margin:12px 0 10px; }
+  .process-card p{ color:var(--ink-soft); font-size:14.5px; }
+
+  /* ---------- Testimonials ---------- */
+  .testi{ background:var(--paper-card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .testi-card{ background:var(--paper); border-radius:var(--radius); padding:28px; border:1px solid var(--line); }
+  .testi-quote{ color:var(--gold); width:26px; height:26px; margin-bottom:16px; }
+  .testi-card p.quote{ font-family:var(--font-display); font-style:italic; font-size:16.5px; color:var(--ink); margin-bottom:22px; }
+  .testi-person{ display:flex; align-items:center; gap:12px; }
+  .avatar{ width:42px; height:42px; border-radius:50%; background:var(--leaf); display:flex; align-items:center; justify-content:center; color:var(--forest-dark); font-family:var(--font-display); font-weight:700; }
+  .testi-person strong{ display:block; font-size:14.5px; }
+  .testi-person span{ font-size:12.5px; color:var(--ink-soft); }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 0.85fr; gap:48px; align-items:start; }
+  .form-card{ background:var(--paper-card); border-radius:var(--radius); padding:36px; border:1px solid var(--line); }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:8px; }
+  .field input, .field textarea{
+    width:100%; border:1.5px solid var(--line); background:var(--paper); border-radius:10px;
+    padding:13px 15px; font-size:14.5px; color:var(--ink); transition:border-color .2s;
+  }
+  .field input:focus, .field textarea:focus{ border-color:var(--forest); outline:none; }
+  .field textarea{ resize:vertical; min-height:110px; }
+
+  .info-card{ background:var(--forest); color:var(--paper); border-radius:var(--radius); padding:32px; margin-bottom:20px; }
+  .info-card h4{ color:var(--paper); font-size:19px; margin-bottom:18px; }
+  .info-row{ display:flex; gap:14px; margin-bottom:16px; align-items:flex-start; }
+  .info-row svg{ width:20px; height:20px; color:var(--gold-light); flex-shrink:0; margin-top:2px; }
+  .info-row span{ font-size:14px; color:rgba(241,236,218,0.88); }
+  .map-frame{ border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); height:220px; }
+  .map-frame iframe{ width:100%; height:100%; border:0; filter:sepia(12%) saturate(85%); }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--forest-dark); color:rgba(241,236,218,0.78); padding-top:76px; }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1.1fr; gap:40px; padding-bottom:48px; border-bottom:1px solid rgba(241,236,218,0.14); }
+  .footer-brand .brand-mark{ color:var(--gold-light); }
+  .footer-brand p{ margin-top:16px; font-size:14px; max-width:34ch; }
+  .footer-col h5{ font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--gold-light); margin-bottom:18px; }
+  .footer-col li{ margin-bottom:11px; font-size:14px; }
+  .footer-col a:hover{ color:var(--paper); }
+  .social-row{ display:flex; gap:12px; margin-top:20px; }
+  .social-row a{ width:38px; height:38px; border-radius:50%; border:1px solid rgba(241,236,218,0.25); display:flex; align-items:center; justify-content:center; transition:.25s; }
+  .social-row a:hover{ background:var(--gold); border-color:var(--gold); color:var(--forest-dark); }
+  .social-row svg{ width:17px; height:17px; }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding:26px 0; font-size:12.5px; flex-wrap:wrap; gap:10px; }
+
+  /* ---------- Floating WA ---------- */
+  .wa-float{
+    position:fixed; bottom:26px; right:26px; z-index:80;
+    width:60px; height:60px; border-radius:50%; background:#2C4A34; color:var(--paper);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 14px 28px -10px rgba(0,0,0,.5);
+    transition:transform .25s;
+  }
+  .wa-float:hover{ transform:scale(1.08); }
+  .wa-float svg{ width:28px; height:28px; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-grid, .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .hero-art{ height:360px; order:-1; }
+    .why-grid{ grid-template-columns:repeat(2,1fr); }
+    .process-grid, .testi-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .hero{ padding-top:132px; }
+    .hero-stats div{ padding-right:20px; margin-right:20px; }
+    .why-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    section{ padding:76px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ DEFS: ikon & motif dipakai ulang ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16Z"/><path d="M4 20c4-6 8-9 14-12"/></symbol>
+    <symbol id="ic-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z"/></symbol>
+    <symbol id="ic-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3s7 8 7 13a7 7 0 1 1-14 0c0-5 7-13 7-13Z"/></symbol>
+    <symbol id="ic-jar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3h8v3H8z"/><path d="M6 6h12v13a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6Z"/><path d="M6 11h12"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12.5 9.5 18 20 6"/></symbol>
+    <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h11v9H2z"/><path d="M13 10h5l4 4v2h-9z"/><circle cx="6.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></symbol>
+    <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2c2.6.3 4.5 2.3 4.5 5.3"/></symbol>
+    <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6l-8-3Z"/><path d="M8.5 12.5 11 15l5-5.5"/></symbol>
+    <symbol id="ic-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.4-7-11.5A7 7 0 0 1 19 9.5C19 14.6 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></symbol>
+    <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2.2 2C9.6 20.6 3.4 14.4 3 6.2A2 2 0 0 1 5 4Z"/></symbol>
+    <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="ic-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M9 7C5.7 7 3 9.7 3 13c0 2.8 2 5 4.6 5.4l.4-1.8C6.7 16.2 5.8 15 5.6 13.4 7.9 13.2 9.6 11.5 9.6 9.4 9.6 8 8.4 7 9 7Zm10 0c-3.3 0-6 2.7-6 6 0 2.8 2 5 4.6 5.4l.4-1.8c-1.3-.4-2.2-1.6-2.4-3.2 2.3-.2 4-1.9 4-4C19.6 8 18.4 7 19 7Z"/></symbol>
+    <symbol id="ic-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.2.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.3-2.9-.3-.4.3-.4.7-1.3.1-.2 0-.4 0-.5L9 6.9c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.8.1.2 1.9 2.9 4.6 4 2.7 1.1 2.7.7 3.2.7.5 0 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+    <symbol id="ic-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></symbol>
+    <symbol id="ic-fb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 21v-7h2.5l.5-3H14V9c0-1 .3-1.7 1.7-1.7H17V4.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1V11H8v3h2.6v7Z"/></symbol>
+    <symbol id="ic-yt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5v5l4.5-2.5Z" fill="currentColor" stroke="none"/></symbol>
+
+    <linearGradient id="grad-forest" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3C6248"/>
+      <stop offset="1" stop-color="#1B3122"/>
+    </linearGradient>
+    <linearGradient id="grad-soil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8A5C34"/>
+      <stop offset="1" stop-color="#5A3A22"/>
+    </linearGradient>
+    <linearGradient id="grad-leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9AB876"/>
+      <stop offset="1" stop-color="#5F7D45"/>
+    </linearGradient>
+    <linearGradient id="grad-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E3C374"/>
+      <stop offset="1" stop-color="#B0812E"/>
+    </linearGradient>
+
+    <path id="stamp-circle" d="M 66,10 A 56,56 0 1 1 65.99,10" fill="none"/>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="site-nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a href="#home" class="brand" aria-label="Beranda Sentra UMKM Desa Cikadu">
+      <svg class="brand-mark" viewBox="0 0 132 132" aria-hidden="true"><use href="#ic-tree" x="42" y="42" width="48" height="48"/><circle cx="66" cy="66" r="62" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.55"/></svg>
+      <span class="brand-text"><strong>Cikadu</strong><span>UMKM Desa · Sukabumi</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#tentang">Tentang</a>
+      <a href="#produk">Produk</a>
+      <a href="#proses">Cara Beli</a>
+      <a href="#testimoni">Testimoni</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#kontak" class="btn btn-primary" style="padding:11px 20px; font-size:14px;">Hubungi Kami</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#tentang">Tentang</a>
+  <a href="#produk">Produk</a>
+  <a href="#proses">Cara Beli</a>
+  <a href="#testimoni">Testimoni</a>
+  <a href="#kontak">Kontak</a>
+  <!-- WhatsApp number updated to 6285795276620 -->
+  <a href="https://wa.me/6285795276620" target="_blank" rel="noopener" class="btn btn-gold">Hubungi via WhatsApp</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <svg class="contour" viewBox="0 0 1180 640" preserveAspectRatio="none" aria-hidden="true">
+    <g fill="none" stroke="#2C4A34" stroke-width="1">
+      <path opacity="0.10" d="M-40,520 C200,460 380,560 620,500 C860,440 1000,520 1220,470"/>
+      <path opacity="0.12" d="M-40,560 C220,500 400,600 640,540 C880,480 1020,560 1220,510"/>
+      <path opacity="0.09" d="M-40,600 C240,540 420,630 660,580 C900,520 1040,600 1220,560"/>
+      <path opacity="0.07" d="M-40,480 C180,420 360,520 600,460 C840,400 980,480 1220,430"/>
+    </g>
+  </svg>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal in">Koperasi &amp; Sentra UMKM · Desa Cikadu, Sukabumi</span>
+      <h1 class="reveal in">Hasil bumi Cikadu, <em>diolah dengan tangan</em>, dikirim ke rumah Anda.</h1>
+      <p class="lede reveal in">Kami menghimpun hasil pertanian, hasil perkebunan, pupuk organik, dan olahan makanan buatan petani serta pengrajin Desa Cikadu — dijual langsung tanpa perantara panjang, dengan mutu yang kami jaga dari kebun sampai kemasan.</p>
+      <div class="hero-actions reveal in">
+        <a href="#produk" class="btn btn-primary">Lihat Katalog Produk</a>
+        <a href="#kontak" class="btn btn-ghost">Hubungi via WhatsApp</a>
+      </div>
+      <div class="hero-stats reveal in">
+        <div><strong>120+</strong><span>Petani &amp; Pengrajin Mitra</span></div>
+        <div><strong>35+</strong><span>Produk Unggulan</span></div>
+        <div><strong>4</strong><span>Kategori Hasil Bumi</span></div>
+        <div><strong>2013</strong><span>Mulai Beroperasi</span></div>
+      </div>
+    </div>
+    <div class="hero-art reveal in">
+      <div class="contour-box" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 420 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="420" height="480" fill="url(#grad-forest)"/>
+          <g fill="none" stroke="#F1ECDA" stroke-width="1.1" opacity="0.16">
+            <path d="M-20,120 C80,80 180,150 280,100 C360,65 400,110 460,90"/>
+            <path d="M-20,190 C90,150 190,220 290,170 C370,135 410,175 460,160"/>
+            <path d="M-20,260 C100,220 200,290 300,240 C380,205 420,245 460,230"/>
+            <path d="M-20,330 C110,290 210,360 310,310 C390,275 430,315 460,300"/>
+          </g>
+          <use href="#ic-leaf" x="150" y="330" width="120" height="120" color="#E3C374" opacity="0.9"/>
+        </svg>
+      </div>
+      <svg class="stamp-float stamp" viewBox="0 0 132 132" aria-hidden="true">
+        <circle cx="66" cy="66" r="63" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="66" cy="66" r="52" fill="none" stroke="currentColor" stroke-width="1"/>
+        <text><textPath href="#stamp-circle" startOffset="2">KOPERASI UMKM · DESA CIKADU · SUKABUMI ·</textPath></text>
+        <use href="#ic-tree" x="46" y="46" width="40" height="40"/>
+      </svg>
+      <div class="polaroid p1"><div class="swatch" style="background:linear-gradient(160deg,#8A5C34,#5A3A22)"></div><span>Kopi &amp; hasil kebun</span></div>
+      <div class="polaroid p2"><div class="swatch" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"></div><span>Sayur &amp; palawija</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TENTANG ============ -->
+<section class="about" id="tentang">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal" aria-hidden="true">
+      <svg width="100%" height="100%" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="500" fill="url(#grad-soil)"/>
+        <g fill="none" stroke="#F1ECDA" stroke-width="1" opacity="0.18">
+          <path d="M-20,140 C90,100 190,170 300,120 C360,95 400,120 440,105"/>
+          <path d="M-20,230 C100,190 200,260 310,210 C370,185 410,210 440,195"/>
+          <path d="M-20,320 C110,280 210,350 320,300 C380,275 420,300 440,285"/>
+        </g>
+        <use href="#ic-users" x="150" y="200" width="100" height="100" color="#E3C374" opacity="0.92"/>
+      </svg>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">Profil Kami</span>
+      <h2 class="reveal">Dari ladang dan dapur warga Cikadu, untuk pasar yang lebih luas</h2>
+      <p class="reveal">Sentra UMKM Desa Cikadu berdiri untuk mewadahi hasil kerja petani, pekebun, dan pengrajin makanan di desa kami. Setiap produk yang kami tawarkan melewati proses seleksi mutu, pengemasan yang rapi, dan harga yang wajar bagi produsen maupun pembeli.</p>
+      <p class="reveal">Kami percaya kesejahteraan desa tumbuh ketika hasil bumi dijual dengan rantai yang lebih pendek — langsung dari kebun ke tangan konsumen, dengan cerita di baliknya tetap terjaga.</p>
+      <ul class="about-list reveal">
+        <li><svg><use href="#ic-check"/></svg><span>Bahan baku dipanen &amp; diolah langsung oleh warga desa</span></li>
+        <li><svg><use href="#ic-check"/></svg><span>Harga transparan, hasil penjualan kembali ke petani mitra</span></li>
+        <li><svg><use href="#ic-check"/></svg><span>Pupuk organik diproduksi dari limbah pertanian setempat</span></li>
+        <li><svg><use href="#ic-check"/></svg><span>Melayani pembelian eceran, grosir, dan kerja sama distribusi</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUK ============ -->
+<section id="produk">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Katalog</span>
+      <h2>Produk unggulan Desa Cikadu</h2>
+      <p>Empat kategori hasil bumi yang kami kelola bersama petani dan pengrajin mitra. Harga dapat menyesuaikan musim panen dan jumlah pemesanan.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Kategori produk">
+      <button class="tab-btn active" data-tab="pertanian" role="tab" aria-selected="true">Hasil Pertanian</button>
+      <button class="tab-btn" data-tab="perkebunan" role="tab" aria-selected="false">Hasil Perkebunan</button>
+      <button class="tab-btn" data-tab="pupuk" role="tab" aria-selected="false">Pupuk</button>
+      <button class="tab-btn" data-tab="olahan" role="tab" aria-selected="false">Olahan Makanan</button>
+    </div>
+
+    <!-- Hasil Pertanian -->
+    <div class="tab-panel active" id="panel-pertanian">
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"><span class="product-badge">Segar</span><svg aria-hidden="true"><use href="#ic-leaf"/></svg></div>
+          <div class="product-body"><h4>Beras Merah Cikadu</h4><p>Beras merah organik hasil sawah tadah hujan, kaya serat.</p><div class="product-foot"><span class="price">Rp 22.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#E3C374,#B0812E)"><span class="product-badge">Panen Baru</span><svg aria-hidden="true"><use href="#ic-leaf"/></svg></div>
+          <div class="product-body"><h4>Jagung Manis</h4><p>Dipetik langsung dari ladang, manis dan renyah.</p><div class="product-foot"><span class="price">Rp 5.000/buah</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#8A5C34,#5A3A22)"><span class="product-badge">Lokal</span><svg aria-hidden="true"><use href="#ic-leaf"/></svg></div>
+          <div class="product-body"><h4>Singkong Cikadu</h4><p>Umbi segar, cocok untuk digoreng maupun diolah keripik.</p><div class="product-foot"><span class="price">Rp 6.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"><span class="product-badge">Segar</span><svg aria-hidden="true"><use href="#ic-leaf"/></svg></div>
+          <div class="product-body"><h4>Ubi Jalar Madu</h4><p>Rasa manis alami, hasil kebun palawija desa.</p><div class="product-foot"><span class="price">Rp 8.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#E3C374,#B0812E)"><span class="product-badge">Kering</span><svg aria-hidden="true"><use href="#ic-leaf"/></svg></div>
+          <div class="product-body"><h4>Kacang Tanah</h4><p>Dijemur alami, siap untuk digoreng atau direbus.</p><div class="product-foot"><span class="price">Rp 24.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Hasil Perkebunan -->
+    <div class="tab-panel" id="panel-perkebunan">
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#8A5C34,#5A3A22)"><span class="product-badge">Petik Pilih</span><svg aria-hidden="true"><use href="#ic-tree"/></svg></div>
+          <div class="product-body"><h4>Kopi Robusta Cikadu</h4><p>Biji kopi dari kebun lereng desa, sangrai medium.</p><div class="product-foot"><span class="price">Rp 45.000/250g</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#5F7D45,#3C4E2B)"><span class="product-badge">Kering</span><svg aria-hidden="true"><use href="#ic-tree"/></svg></div>
+          <div class="product-body"><h4>Cengkeh Kering</h4><p>Bunga cengkeh pilihan, dijemur hingga kadar air ideal.</p><div class="product-foot"><span class="price">Rp 95.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"><span class="product-badge">Utuh</span><svg aria-hidden="true"><use href="#ic-tree"/></svg></div>
+          <div class="product-body"><h4>Kelapa Butiran</h4><p>Kelapa tua pilihan, cocok untuk santan maupun VCO.</p><div class="product-foot"><span class="price">Rp 6.500/butir</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#E3C374,#B0812E)"><span class="product-badge">Aromatik</span><svg aria-hidden="true"><use href="#ic-tree"/></svg></div>
+          <div class="product-body"><h4>Pala Kering</h4><p>Biji dan fuli pala kering, aroma tajam khas Cikadu.</p><div class="product-foot"><span class="price">Rp 110.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Pupuk -->
+    <div class="tab-panel" id="panel-pupuk">
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#5A3A22,#3A2515)"><span class="product-badge">Organik</span><svg aria-hidden="true"><use href="#ic-drop"/></svg></div>
+          <div class="product-body"><h4>Kompos Organik</h4><p>Hasil fermentasi sisa panen &amp; kotoran ternak, siap tabur.</p><div class="product-foot"><span class="price">Rp 3.500/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#5F7D45,#3C4E2B)"><span class="product-badge">Cair</span><svg aria-hidden="true"><use href="#ic-drop"/></svg></div>
+          <div class="product-body"><h4>Pupuk Organik Cair</h4><p>POC dari fermentasi buah &amp; limbah kebun, kaya hara.</p><div class="product-foot"><span class="price">Rp 25.000/liter</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#8A5C34,#5A3A22)"><span class="product-badge">Kandang</span><svg aria-hidden="true"><use href="#ic-drop"/></svg></div>
+          <div class="product-body"><h4>Pupuk Kandang Matang</h4><p>Sudah melalui proses pengomposan, aman untuk tanaman.</p><div class="product-foot"><span class="price">Rp 2.800/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"><span class="product-badge">Racikan</span><svg aria-hidden="true"><use href="#ic-drop"/></svg></div>
+          <div class="product-body"><h4>Pupuk Racikan Lokal</h4><p>Formulasi campuran untuk tanaman sayur dan palawija.</p><div class="product-foot"><span class="price">Rp 6.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Olahan Makanan -->
+    <div class="tab-panel" id="panel-olahan">
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#E3C374,#B0812E)"><span class="product-badge">Manis Alami</span><svg aria-hidden="true"><use href="#ic-jar"/></svg></div>
+          <div class="product-body"><h4>Gula Aren Cetak</h4><p>Diolah dari nira pohon aren desa, tanpa pemanis tambahan.</p><div class="product-foot"><span class="price">Rp 28.000/kg</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#8A5C34,#5A3A22)"><span class="product-badge">Renyah</span><svg aria-hidden="true"><use href="#ic-jar"/></svg></div>
+          <div class="product-body"><h4>Keripik Singkong Balado</h4><p>Digoreng dengan minyak baru, bumbu balado khas rumahan.</p><div class="product-foot"><span class="price">Rp 15.000/pack</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#5A3A22,#3A2515)"><span class="product-badge">Bubuk</span><svg aria-hidden="true"><use href="#ic-jar"/></svg></div>
+          <div class="product-body"><h4>Kopi Bubuk Kemasan</h4><p>Digiling halus dari biji kopi robusta pilihan Cikadu.</p><div class="product-foot"><span class="price">Rp 30.000/200g</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#E3C374,#B0812E)"><span class="product-badge">Murni</span><svg aria-hidden="true"><use href="#ic-jar"/></svg></div>
+          <div class="product-body"><h4>Minyak Kelapa Murni (VCO)</h4><p>Diproses dingin dari kelapa segar, tanpa bahan kimia.</p><div class="product-foot"><span class="price">Rp 40.000/250ml</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-thumb" style="background:linear-gradient(160deg,#9AB876,#5F7D45)"><span class="product-badge">Kering</span><svg aria-hidden="true"><use href="#ic-jar"/></svg></div>
+          <div class="product-body"><h4>Sale Pisang</h4><p>Pisang pilihan yang dijemur dan dipanggang tradisional.</p><div class="product-foot"><span class="price">Rp 18.000/pack</span><a href="#kontak" class="mini-link">Pesan <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a></div></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="why">
+  <div class="wrap">
+    <span class="eyebrow reveal">Kenapa Cikadu</span>
+    <h2 class="reveal">Mutu terjaga, mulai dari kebun</h2>
+    <div class="why-grid reveal">
+      <div class="why-card"><svg aria-hidden="true"><use href="#ic-shield"/></svg><h4>Mutu Terseleksi</h4><p>Setiap hasil bumi diperiksa kematangan dan kebersihannya sebelum dikemas.</p></div>
+      <div class="why-card"><svg aria-hidden="true"><use href="#ic-users"/></svg><h4>Langsung dari Petani</h4><p>Rantai distribusi pendek — keuntungan lebih banyak kembali ke produsen desa.</p></div>
+      <div class="why-card"><svg aria-hidden="true"><use href="#ic-drop"/></svg><h4>Ramah Lingkungan</h4><p>Pupuk dan pengolahan memanfaatkan limbah pertanian, minim bahan kimia.</p></div>
+      <div class="why-card"><svg aria-hidden="true"><use href="#ic-truck"/></svg><h4>Siap Dikirim</h4><p>Melayani pengiriman ke luar desa serta pengambilan langsung di sentra UMKM.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROSES ============ -->
+<section id="proses">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cara Berbelanja</span>
+      <h2>Tiga langkah memesan produk Cikadu</h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-card"><span class="process-num">01</span><h4>Pilih &amp; Tanyakan</h4><p>Lihat katalog produk, lalu hubungi kami via WhatsApp untuk cek ketersediaan dan ongkos kirim.</p></div>
+      <div class="process-card"><span class="process-num">02</span><h4>Konfirmasi Pesanan</h4><p>Kami kirimkan rincian pesanan dan total pembayaran untuk dikonfirmasi sebelum diproses.</p></div>
+      <div class="process-card"><span class="process-num">03</span><h4>Kemas &amp; Kirim</h4><p>Produk dikemas segar dari sentra UMKM, dikirim atau siap diambil sesuai kesepakatan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONI ============ -->
+<section class="testi" id="testimoni">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-inline:auto;">
+      <span class="eyebrow">Kata Mereka</span>
+      <h2>Dipercaya pelanggan &amp; mitra</h2>
+    </div>
+    <div class="testi-grid reveal">
+      <article class="testi-card">
+        <svg class="testi-quote" aria-hidden="true"><use href="#ic-quote"/></svg>
+        <p class="quote">Kopi robusta dari Cikadu rasanya khas dan selalu segar setiap kali pesan ulang.</p>
+        <div class="testi-person"><div class="avatar">R</div><div><strong>Rina Marlina</strong><span>Pelanggan Tetap, Bandung</span></div></div>
+      </article>
+      <article class="testi-card">
+        <svg class="testi-quote" aria-hidden="true"><use href="#ic-quote"/></svg>
+        <p class="quote">Pupuk organik dari sini terbukti membuat hasil panen sayur saya lebih baik dan tanah lebih subur.</p>
+        <div class="testi-person"><div class="avatar">D</div><div><strong>Dede Suryana</strong><span>Petani Mitra, Sukabumi</span></div></div>
+      </article>
+      <article class="testi-card">
+        <svg class="testi-quote" aria-hidden="true"><use href="#ic-quote"/></svg>
+        <p class="quote">Gula aren dan keripik singkongnya jadi langganan warung kami, kualitasnya konsisten.</p>
+        <div class="testi-person"><div class="avatar">S</div><div><strong>Siti Aminah</strong><span>Mitra Distributor, Cianjur</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAK ============ -->
+<section id="kontak">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Hubungi Kami</span>
+      <h2>Mari berbelanja atau bermitra dengan kami</h2>
+      <p>Isi formulir untuk kirim pesan langsung ke WhatsApp kami, atau gunakan info kontak di samping.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <form class="form-card" id="contactForm">
+        <div class="field"><label for="nama">Nama Lengkap</label><input id="nama" type="text" placeholder="Nama Anda" required></div>
+        <div class="field"><label for="wa">Nomor WhatsApp</label><input id="wa" type="tel" placeholder="08xxxxxxxxxx" required></div>
+        <div class="field"><label for="pesan">Pesan / Produk yang Diminati</label><textarea id="pesan" placeholder="Contoh: Saya ingin memesan 5kg Beras Merah Cikadu" required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Kirim via WhatsApp</button>
+      </form>
+      <div>
+        <div class="info-card">
+          <h4>Informasi Sentra UMKM</h4>
+          <div class="info-row"><svg aria-hidden="true"><use href="#ic-map"/></svg><span>Desa Cikadu, Kabupaten Sukabumi, Jawa Barat</span></div>
+          <div class="info-row"><svg aria-hidden="true"><use href="#ic-phone"/></svg><span>+62 812-3456-7890</span></div>
+          <div class="info-row"><svg aria-hidden="true"><use href="#ic-mail"/></svg><span>umkm.cikadu@gmail.com</span></div>
+          <div class="info-row"><svg aria-hidden="true"><use href="#ic-clock"/></svg><span>Senin–Sabtu, 08.00–16.00 WIB</span></div>
+        </div>
+        <div class="map-frame">
+          <iframe title="Peta lokasi Desa Cikadu, Sukabumi" src="https://www.google.com/maps?q=Desa+Cikadu,+Sukabumi&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="brand"><svg class="brand-mark" viewBox="0 0 132 132" aria-hidden="true"><use href="#ic-tree" x="42" y="42" width="48" height="48"/><circle cx="66" cy="66" r="62" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.55"/></svg><span class="brand-text"><strong style="color:var(--paper)">Cikadu</strong><span>UMKM Desa · Sukabumi</span></span></a>
+        <p>Sentra UMKM Desa Cikadu menghubungkan hasil pertanian, perkebunan, pupuk organik, dan olahan makanan warga desa dengan pasar yang lebih luas.</p>
+        <div class="social-row">
+          <a href="https://wa.me/6285795276620" target="_blank" rel="noopener" aria-label="WhatsApp"><svg aria-hidden="true"><use href="#ic-wa"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#ic-ig"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg aria-hidden="true"><use href="#ic-fb"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg aria-hidden="true"><use href="#ic-yt"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Navigasi</h5><ul><li><a href="#tentang">Tentang Kami</a></li><li><a href="#produk">Produk</a></li><li><a href="#proses">Cara Beli</a></li><li><a href="#testimoni">Testimoni</a></li></ul></div>
+      <div class="footer-col"><h5>Kategori</h5><ul><li><a href="#produk">Hasil Pertanian</a></li><li><a href="#produk">Hasil Perkebunan</a></li><li><a href="#produk">Pupuk</a></li><li><a href="#produk">Olahan Makanan</a></li></ul></div>
+      <div class="footer-col"><h5>Kontak</h5><ul><li>Desa Cikadu, Sukabumi</li><li>+62 812-3456-7890</li><li>umkm.cikadu@gmail.com</li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Sentra UMKM Desa Cikadu. Seluruh hak cipta dilindungi.</span>
+      <span>Dibuat untuk kemajuan UMKM desa.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp floating button (number updated to 6285795276620) -->
+<a class="wa-float" href="https://wa.me/6285795276620" target="_blank" rel="noopener" aria-label="Hubungi via WhatsApp"><svg aria-hidden="true"><use href="#ic-wa"/></svg></a>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 12);
+  });
+
+  // Mobile menu
+  const navToggle = document.getElementById('navToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobilePanel.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  mobilePanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobilePanel.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Product tabs
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Contact form -> WhatsApp
+  // WA number set to 6285795276620
+  const WA_NUMBER = '6285795276620';
+
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const nama = document.getElementById('nama').value.trim();
+    const wa = document.getElementById('wa').value.trim();
+    const pesan = document.getElementById('pesan').value.trim();
+
+    // Build the full message and encode it once
+    const message = `Halo Sentra UMKM Cikadu, saya ${nama} (${wa}).\n\n${pesan}`;
+    const encoded = encodeURIComponent(message);
+    const url = `https://wa.me/${WA_NUMBER}?text=${encoded}`;
+
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
